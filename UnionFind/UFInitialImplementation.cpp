@@ -129,13 +129,13 @@ bool test(){
   return true;
 }
 #endif 
-
+#if UNIONFIND_WEIGHT_HEURISTIC
 /*  
 Try to speed up
 	connected() //find operation
 	DoUnion()   // union
 
-	**weighted size heuristic is used.**  
+	**weighted (by size) heuristic is used.**  
 		only merge small tree below large tree
 		this will limit the size of tree to lg(N);
 
@@ -205,6 +205,94 @@ bool test(){
   cout<<"Ufobj.connected(1,7);" << Ufobj.connected(1,7) <<endl;
   return true;
 }
+#endif 
+
+/*  
+Try to speed up
+	connected() //find operation
+	DoUnion()   // union
+
+	** Use the path compression and weighted (by size) heuristic .**  
+		only merge small tree below large tree
+		path compression will make the tree almost flat!!!
+
+*/
+class UnionFind{
+  int *storage; /* stores the relation between the object id and the component id . How to get object id use symbol table*/
+int *treesize; /* stores the size(number of objects) of trees */
+  int size; 
+public:
+  UnionFind(int N){ /* initialize  O(n) */
+	storage = new int[N];
+	treesize = new int[N];
+	size = N;
+	for(int i=0 ; i< N; i++){
+	  treesize[i] = 1; /* all tree are of 1 node at the begining */ 
+	  storage[i]= i; /* put each object in different component class */
+	}
+  }
+  int Root(int p){ /* returns the root object id - Worst case O(lgN) - do path compression */
+	int root,elem,parent;
+	elem = p;
+	while(storage[p] != p){
+	  p = storage[p];
+	}
+	/* now flatten the tree - to achieve the path compression*/
+	root = p;
+	while(storage[elem] != root){
+	  parent = storage[elem];
+	  storage[elem] = root;
+	  elem = parent;
+	}
+	return root;
+  }
+  /* O(lg N) - worst case  */
+  bool connected(int p,int q){ /* p and q represents object index */
+	return Root(p) == Root(q);
+	
+  }
+  /* this will take linear time O(lg N)  !!*/
+  void DoUnion(int p,int q){ /* p and q represent object index */
+	int proot = Root(p);
+	int qroot = Root(q);
+	if(treesize[proot] > treesize[qroot]){
+	  storage[qroot] = storage[proot];
+	  treesize[qroot] += treesize[proot];
+	}else{
+	  storage[proot] = storage[qroot];
+	  treesize[proot] += treesize[qroot];
+	}
+  }
+  ~UnionFind(){
+	delete storage;
+  }
+};
+
+
+bool test(){
+  UnionFind Ufobj(100);
+  string line;
+	vector<int> v1;
+	vector<int> v2;
+  ifstream fileobj("test.txt",ios::in);
+  if(!fileobj.is_open()){
+	exit(1);
+  }
+  while(getline(fileobj,line)){
+	stringstream ss(line);
+	int i ;
+	ss >> i;
+	v1.push_back(i);
+	ss>>i;
+	v2.push_back(i);
+  }
+  for(unsigned int i=0 ; i< v1.size(); i++){
+	Ufobj.DoUnion(v1[i],v2[i]);
+  }
+  cout<<"Ufobj.connected(1,7);" << Ufobj.connected(1,7) <<endl;
+  return true;
+}
+
 
 int main(){
   test();
