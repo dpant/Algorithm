@@ -105,7 +105,7 @@ public:
   }
 	  
 };
-int GenerateRandomNumberBetweenRange(int lowest,int highest){
+int GenerateRandomNumberBetweenRange(int lowest,int highest){ /* generate Random number between [lowest,highest) - higheset non inclusive */
 	
     int random_integer; 
     int range=(highest-lowest); 
@@ -116,7 +116,7 @@ void  RunMonteCarlo(){
   int size = 10000;
   int opensites = 0;
   Percolation* pobj = new Percolation(size);
-  srand((unsigned)time(0)); 
+  srand((unsigned)time(0));  /* system call should not be inside the loop */
   while(1){
 	int sindex = GenerateRandomNumberBetweenRange(0,size*size);
 	if(pobj->isOpen(sindex/size,sindex%size)){
