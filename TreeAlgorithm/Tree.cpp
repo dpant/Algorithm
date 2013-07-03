@@ -166,7 +166,32 @@ public:
 	  cout<< "LCA node is : " << lca << "    " << lca->TreeNodeData()<< endl;
 	}
 	return lca;
+  }
+  int printNodeInRange(int left,int right){ /* print all the element in the BST which are within the range of left,right (both inclusive) [left,right] */
+	return printNodeInRangeR(rootNode,left,right);
   }	
+  int printNodeInRangeR(TreeNode *rootnode,int left,int right){ /* print all the element in the BST which are within the range of left,right (both inclusive) [left,right] */
+	int noelem = 0;
+	if(!rootnode)
+	  return 0;
+    if(rootnode->Left() == NULL && rootnode->Right() == NULL){
+	  if(rootnode->TreeNodeData() >= left && rootnode->TreeNodeData() <= right)
+		cout<< rootnode->TreeNodeData()<< " ";
+	    return 1;
+	}  
+	if(rootnode->TreeNodeData() > right){ //recurse on left
+	  return printNodeInRangeR(rootnode->Left(),left,right);
+	}else if(rootnode->TreeNodeData() < left){
+	  return printNodeInRangeR(rootnode->Right(),left,right);
+	}else{
+	  noelem += 1;
+  	  cout<< rootnode->TreeNodeData() <<" ";
+	  noelem += printNodeInRangeR(rootnode->Left(),left,right);
+	  noelem += printNodeInRangeR(rootnode->Right(),left,right); 	
+	}
+    return noelem;
+
+  }
 
 };
 void test(){
@@ -177,7 +202,8 @@ void test(){
   tp->TraversePreOrderAndPrint();
   tp->TraversePostOrderAndPrint();
   tp->LeastCommonAncestor(tp->FindTreeNode(4),tp->FindTreeNode(141));
-	
+  cout<< endl;
+  std::cout<< endl << tp->printNodeInRange(0,61)<<endl;	
 }
 
 int main(){
