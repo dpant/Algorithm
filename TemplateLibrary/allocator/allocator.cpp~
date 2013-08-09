@@ -1,0 +1,46 @@
+template <typename T>
+class allocator{
+public:
+  typedef T value_type;
+  typedef T* pointer;
+  typedef  T const* const_pointer;
+  typedef T& reference;
+  typedef  T const & const_reference;
+  typedef size_t size_type;
+  typedef ptrdiff_t difference;
+  /* allocate/deallocate Raw memory */
+  pointer allocate(size_type n, allocator<void>::const_pointer hint = 0);
+  void deallocate(A::pointer p, size_type n);
+
+  size_type max_size();
+  pointer address();
+
+  /* construct or destroy object in already created memory */
+  void construct(pointer p, const_reference t);
+  void destroy(pointer p);
+
+};
+/* returns raw memory without calling constructor , hint is ignored for now. Throws exception if can't allocate */
+pointer allocator::allocate(size_type n, allocator<void>::const_pointer hint = 0){
+  return static_cast<pointer>(operator new(n));	
+}
+
+void allocator::deallocate(A::pointer p, size_type n){
+  operator delete p;
+}
+
+pointer allocator::address(){
+  return &T;
+}
+
+void construct(pointer p, const_reference t){
+  new(p) t;
+}
+void destroy(pointer p){
+  pt->~T();
+}
+
+main(){
+  allocator<int> a;
+  allocator::pointer p =  a.allocate(10);
+}
