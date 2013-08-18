@@ -1,4 +1,4 @@
-/* Array based circular queue implementation */
+/* Circular array based Queue implementation */
 /*  end indicated the next locaiton where the item need to be inserted */
 /* start indicate the location whose next item need to be poped if it is not end 
 
@@ -74,8 +74,6 @@ private:
 	start = (start +1)% size;
 	return Array[start];
   }
-	
-
 };
 int main(){
   queueArray qA(10);
