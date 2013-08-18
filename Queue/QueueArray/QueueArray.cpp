@@ -1,7 +1,5 @@
 /* Circular array based Queue implementation */
-/*  end indicated the next locaiton where the item need to be inserted */
-/* start indicate the location whose next item need to be poped if it is not end 
-
+/* 
 At the begining when no item is there array looks like this.
 
 Start
