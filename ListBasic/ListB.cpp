@@ -15,7 +15,7 @@ class List{
   size_t msize;
   /* to make iterator functionality work. we need to make end() which return iterator past the list */
   ListNode *dummyendnode;  /* Notice dummyend can't be part of iterator, as we have to return same end for multiple iterator end() calls */
-	
+	iterator 	
 public:
 
   /* iterator implementation  */

@@ -1,12 +1,11 @@
 #include<iostream>
 using namespace std;
 /* 
-
 Heap is a **Tree structure** in which root nodes is greater than its child node.
 --  So leaf node is always a **heap subtree**
 
 Think it as an array representing a "Heap" 
-For element i
+For element i [ if index starts at 1 ] 
 				2i is left child
 				2i + 1 is right child
 */
@@ -80,15 +79,23 @@ void BuildHeap(int *a,int len, int (*cmp)(int x,int y)){
 	heapify(a,len,i,cmp);
   }
 }
+/* 
+	sort an array a of integer with length len 
+   	* not a stable sort consider the data set 3 1 5 3  
+	* its a in place sort. don't need extra space
+    * a very good datastructure for doing a partial sort
+    * nlogn complexity
+    * use in priority queue. biggest/smallest  element in root of tree
+    * Linked list (?) 
+		heapify operation will become linear O(n)
+        so overall complexity become n^2
 
+*/
 void HeapSort(int *a , int len,int (*cmp)(int x,int y)){
   BuildHeap(a,len,cmp);
-  printArray(a,len);
   for(int i = len ; i > 0 ; i--){
 	swap(a[0],a[i-1]);/* put the max element at the end of array */
-	cout<<"SWAP:" << " ";printArray(a,len);
 	heapify(a,i-1,0,cmp); /* do heapify at index 0 but reduce the array size */
-	printArray(a,len);
   }	
 }
 

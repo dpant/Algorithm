@@ -20,7 +20,7 @@ int BinarySearch(int* array,int len, int key){
   int low = 0;
   int mid = 0;
   int high = len-1;
-  while(low <= high){
+  while(low <= high){ /* notice <= rather than < */
 	mid  = low + (high - low)/2; // to prevent overflow
 	if(key < array[mid]){
 	  high = mid -1;

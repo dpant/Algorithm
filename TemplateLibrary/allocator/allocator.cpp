@@ -22,8 +22,7 @@
 
 
 	STL allocator need to comply with the requirement stated in the standard
-    Allocator here is pretty close to those requement but might not fulfill 
-	all requirement laid by the c++ standard.
+    Allocator here meets the requement laid by the c++ standard.
 
 	None the less this allocator  will be used for my own library (which is very similar to STL)
 
@@ -40,6 +39,10 @@
 	and return void* just like malloc() do !
 
 	C++ standard depict that the alloctor should be type aware.
+	
+	Also Till C++03 the allocator should be stateless. This restriction is relaxed in C++11.
+	
+	http://stackoverflow.com/questions/4110292/worst-that-can-happen-if-i-dont-obey-the-stateless-custom-allocators-dogma
 
 	**** Check the requirement in C++ standard or wikipedia to know more about it. **** 
 
@@ -119,6 +122,8 @@ public:
   }
 };
 /* non member == and =! operator */
+/* http://stackoverflow.com/questions/4622330/operator-overloading-member-function-vs-non-member-function */
+
 template< class T1, class T2 >
 bool operator==( const myallocator<T1>& lhs, const myallocator<T2>& rhs ){ return true; }
 template< class T1, class T2 >
