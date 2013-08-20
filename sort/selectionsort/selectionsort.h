@@ -1,6 +1,11 @@
 #include "../utils.h"
 #include <vector>
 template <typename T>
+/* 
+	 n^2 worst case
+	 n^2 best case (Even if the input array is sorted)
+	
+*/
 void selectionsort(std::vector<T> &a,bool (*compare)(int l,int r)){
   int mini;
   for(int i =0; i< a.size();i++){

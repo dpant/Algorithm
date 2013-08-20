@@ -17,6 +17,15 @@ void swap (int &i, int & j){
   i = j;
   j = temp;
 }
+void GenerateTestFile2(string filename){
+  enum { DATASIZE = 100000};
+  ofstream fobj(filename.c_str(), ios::out);
+  if(!fobj.is_open())
+	exit(1);
+  for(int i = 0 ; i < DATASIZE; i++){
+	  fobj << i <<endl;
+  }
+}
 
 void GenerateTestFile(string filename){
   enum { DATASIZE = 100000};
