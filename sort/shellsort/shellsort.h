@@ -6,9 +6,9 @@
 /* shell sort implemention. much faster than insertion and selection sort */
 /* 
 	Basic idea:
-	sort in different passes with distance d
-	no know perfect solution for d;
-	heuristic solution choose 2^i -1
+	sort in different passes with distances d
+	no know perfect solution for how to pick perfect sequence for d;
+	heuristic solution is to choose sequence 2^i -1
 
 */
 
