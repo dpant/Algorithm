@@ -9,15 +9,20 @@ start and end index are both inclusive [start,end]
 
 */
 template<typename T>
-void mergesortR(T *a,T* temp,int start,int end,bool (*comp)(T,T)){
+void mergesortR(T *a,T* temp,int start,int end,bool (*comp)(T,T),int level){
+  level++;
   int mid = start + (end -start)/2 ;
   if(end - start == 0){
 	return;	   
   }
-  mergesortR(a,temp,start,mid,comp);
-  mergesortR(a,temp,mid+1,end,comp);
+  mergesortR(a,temp,start,mid,comp,level);
+  mergesortR(a,temp,mid+1,end,comp,level);
 
-  merge(a,temp,start,mid,end,comp);// merge [start,mid] with [mid+1,end]
+  if(level % 2) 
+	merge(a,temp,start,mid,end,comp);// merge [start,mid] with [mid+1,end]
+  else{
+	merge(temp,a,start,mid,end,comp);// merge [start,mid] with [mid+1,end]
+  }
 }
 
 /* 
@@ -41,8 +46,8 @@ void merge(T* v, T* aux,int start,int mid,int end,bool (*comp)(T,T)){
 
   i = start;
   j = mid+1;	
-  for(int i = start; i<=end; i++)
-	aux[i] = v[i];
+  //  for(int i = start; i<=end; i++)
+  //	aux[i] = v[i];
   for(k=start;k<=end;k++){
 	if(i > mid){
 	  v[k] = aux[j++];
@@ -70,7 +75,7 @@ void mergesort(std::vector<T> &a, bool (*comp)(T ,T)){
 	temp[i] = inputarray[i] = a[i];
   }
 
-  mergesortR(inputarray,temp,0,a.size()-1,comp);
+  mergesortR(inputarray,temp,0,a.size()-1,comp,0);
 
   for(int i =0 ;i <a.size();i++){ /* store back to vector */
 	a[i] = inputarray[i];
@@ -78,4 +83,12 @@ void mergesort(std::vector<T> &a, bool (*comp)(T ,T)){
 
   delete[] temp;
   delete[] inputarray;
+}
+
+/* Do merge sort on a array  */
+template <typename T>
+void mergesort(T *a,int size, bool (*comp)(T ,T)){
+  T* temp = new T[size]; /* aux array for merge op */
+  mergesortR(a,temp,0,size-1,comp);
+  delete[] temp;
 }
