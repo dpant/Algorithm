@@ -6,7 +6,7 @@
 using namespace std;
 int main(){
   vector<int> v;
-  GenerateTestFile2("test.txt");	
+  GenerateTestFile("test.txt");	
   v = ReadTestFile("test.txt");
   insertionsort(v,&comparef);
   for(int i=0; i< v.size();i++){
