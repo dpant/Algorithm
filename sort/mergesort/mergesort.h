@@ -17,8 +17,8 @@ void mergesortR(T *a,T* temp,int start,int end,bool (*comp)(T,T),int level){
   }
   mergesortR(a,temp,start,mid,comp,level);
   mergesortR(a,temp,mid+1,end,comp,level);
-
-  if(level % 2) 
+  /* level is 1 at top level so we need to store back the result to array a */
+  if(level % 2) /* alternate level should merge from array a and merge to temp */
 	merge(a,temp,start,mid,end,comp);// merge [start,mid] with [mid+1,end]
   else{
 	merge(temp,a,start,mid,end,comp);// merge [start,mid] with [mid+1,end]
@@ -36,7 +36,7 @@ but to save time of creating and destructing the array better to pass
 fixed size array to the function.
 
 merge elements of v[start..mid] and v[mid+1... end]
-results are stored back to v.
+results are stored back to aux.
 
  */
 template <typename T>
