@@ -9,11 +9,19 @@
 #include <time.h>
 #include<iostream>
 using namespace std;
+/* compare different sorting versions
+
+Quick Sorting:100000000 took 55.16sec
+Shell Sorting:100000000 took 372.33sec
+Merge Sorting:100000000 took 37.95sec
+
+*/
 int main(){
-  void (*sortingAlgo[100])(vector<int> &a,int ,int,bool (*comp)(int,int));	
-  sortingAlgo = {quicksort,shellsort,mergesort};
+  void (*sortingAlgo[4])(vector<int> &a,int ,int,bool (*comp)(int,int));	
+  sortingAlgo = {mergesort,quicksort,quicksortHeuristic1,quicksortFixForDuplicateKeys};
   vector<int> v;
-  GenerateTestFile("test.txt");	
+  //GenerateTestFile("test.txt");	
+
   for(int i =0 ; i < 3;i++){
 	v = ReadTestFile("test.txt");
 	clock_t startc = clock();	
@@ -25,5 +33,12 @@ int main(){
 	  std::cout<<"Mismatch. Incorrect sorting"<< std::endl;
 	}
   }
+
+  v = ReadTestFile("test.txt");
+  clock_t startc = clock();	
+  sort(v.begin(),v.end());
+  clock_t endc = clock();
+  cout<< "Sorting:" << v.size() << " took " <<  ((double)(endc-startc))/CLOCKS_PER_SEC << "sec" <<endl;
+
   cout<<std::endl;
 }

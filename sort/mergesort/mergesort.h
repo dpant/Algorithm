@@ -65,19 +65,21 @@ void merge(T* v, T* aux,int start,int mid,int end,bool (*comp)(T,T)){
   }	
 }
 
-/* Do merge sort on a vector  */
+/* Do merge sort on a vector 
+[start, end]
+ */
 template <typename T>
-void mergesort(std::vector<T> &a, bool (*comp)(T ,T)){
-  T* temp = new T[a.size()]; /* aux array for merge op */
-  T* inputarray = new T[a.size()]; // notice even if we need temp array of smaller size we allocate bigger to simplify in merge routine
+void mergesort(std::vector<T> &a,int start,int end, bool (*comp)(T ,T)){
+  int size = end - start +1;
+  T* temp = new T[end+1]; /* aux array for merge op */
+  T* inputarray = new T[end+1]; // notice even if we need temp array of smaller size we allocate bigger to simplify in merge routine
 
-  for(int i =0 ;i <a.size();i++){ /* store in array to make aux and temp same */
+  for(int i =start ;i <=end;i++){ /* store in array to make aux and temp same */
 	temp[i] = inputarray[i] = a[i];
   }
+  mergesortR(inputarray,temp,0,end,comp,0);
 
-  mergesortR(inputarray,temp,0,a.size()-1,comp,0);
-
-  for(int i =0 ;i <a.size();i++){ /* store back to vector */
+  for(int i =start ;i <= end;i++){ /* store back to vector */
 	a[i] = inputarray[i];
   }
 

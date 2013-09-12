@@ -17,6 +17,7 @@ void swap (int &i, int & j){
   i = j;
   j = temp;
 }
+
 void GenerateTestFile2(string filename){
   enum { DATASIZE = 100000};
   ofstream fobj(filename.c_str(), ios::out);
@@ -28,8 +29,8 @@ void GenerateTestFile2(string filename){
 }
 
 void GenerateTestFile(string filename){
-  enum { DATASIZE = 100000};
-  enum { RANGE_START = 0, RANGE_END = 100000 };
+  enum { DATASIZE = 100000000};
+  enum { RANGE_START = 0, RANGE_END = 100000000 };
   set<int> setcontainer;
   ofstream fobj(filename.c_str(), ios::out);
   if(!fobj.is_open())

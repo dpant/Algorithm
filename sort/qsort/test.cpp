@@ -14,7 +14,7 @@ int main(){
   clock_t startc = clock();	
   quicksort(v,0,v.size()-1,&comparef);
   clock_t endc = clock();
-  cout<< "Sorting:" << v.size() << " took " <<  ((double)(endc-startc))/CLOCKS_PER_SEC << "sec";
+  cout<< "Sorting:" << v.size() << " took " <<  ((double)(endc-startc))/CLOCKS_PER_SEC << "sec" <<endl;
   //for(int i=0; i< v.size();i++){
   //	cout << v[i] <<" ";
   //}
