@@ -51,7 +51,7 @@ int upper_bound(int *a,int start,int end,int elem){
   upper_boundR(a,start,end,elem,0);
 }
 int main(){
-  int a[] = {8,8,8,8,8,8};
+  int a[] = {8};
   int lowerindex = lower_bound(a,0,sizeof(a)/sizeof(a[0])-1,8);
   cout << lowerindex <<endl;
   int higherindex = upper_bound(a,0,sizeof(a)/sizeof(a[0])-1,8);
