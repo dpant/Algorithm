@@ -7,13 +7,13 @@
 /* 
 	Basic idea:
 	sort in different passes with distances d
-	no know perfect solution for how to pick perfect sequence for d;
+	no one knows perfect solution for how to pick perfect sequence for d;
 	heuristic solution is to choose sequence 2^i -1
 
 */
 
 template <typename T>
-void shellsort(std::vector<T> &a, bool (*comp)(int ,int)){
+void shellsortcore(std::vector<T> &a, bool (*comp)(int ,int)){
 
   std::vector<int> seq;			
   for(int i=1;i< a.size();i = i*2+1 ){ /* generate the h sorting sequence highest to lowest */
@@ -36,4 +36,9 @@ void shellsort(std::vector<T> &a, bool (*comp)(int ,int)){
   }
 } 
 
+/* wrapper later add functionality in shellsortcore to make it work with range */
 
+template <typename T>
+void shellsort(std::vector<T> &a,int start,int end, bool (*comp)(int ,int)){
+  shellsortcore(a,comp);
+}

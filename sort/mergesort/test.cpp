@@ -10,9 +10,12 @@ int main(){
   //	   	v.push_back(i);
   GenerateTestFile("test.txt");	
   v = ReadTestFile("test.txt");
-  mergesort(v,&comparef);
-  for(int i=0; i< v.size();i++){
-	cout << v[i] <<" ";
+  clock_t startc = clock();	
+  mergesort(v,0,v.size()-1,&comparef);
+  clock_t endc = clock();
+  cout<< "Sorting:" << v.size() << " took " <<  ((double)(endc-startc))/CLOCKS_PER_SEC << "sec" <<endl;
+  if(!validateSort(v,comparef)){
+	std::cout<<"Mismatch. Incorrect sorting"<< std::endl;
   }
   cout<<std::endl;
 }

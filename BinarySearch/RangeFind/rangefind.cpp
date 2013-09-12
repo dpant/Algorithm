@@ -10,7 +10,7 @@ int upper_boundR(int *a,int start,int end,int elem,int found){
 	  return -1;
 	}
   }
-  int mid = start + (end - start)/2;
+  int mid = start + (end - lstart)/2;
   if(a[mid] == elem){
 	int ind =  upper_boundR(a,mid+1,end,elem,1); /* start and mid can be same so this call can make end < start */
 	return ind;
