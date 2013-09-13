@@ -7,17 +7,17 @@
 using namespace std;
 int main(){
   vector<int> v;
-  // for(int i =0; i < 10;i ++ )
-  //	   	v.push_back(i);
-  GenerateTestFile("test.txt");	
-  v = ReadTestFile("test.txt");
+   for(int i =0; i < 10;i ++ )
+  	   	v.push_back(i);
+   // GenerateTestFile("test.txt");	
+   // v = ReadTestFile("test.txt");
   clock_t startc = clock();	
-  quicksort(v,0,v.size()-1,&comparef);
+  quicksortRadomFixForDupKeys(v,0,v.size()-1,&comparef);
   clock_t endc = clock();
   cout<< "Sorting:" << v.size() << " took " <<  ((double)(endc-startc))/CLOCKS_PER_SEC << "sec" <<endl;
-  //for(int i=0; i< v.size();i++){
-  //	cout << v[i] <<" ";
-  //}
+  for(int i=0; i< v.size();i++){
+  	cout << v[i] <<" ";
+  }
   if(!validateSort(v,comparef)){
 	std::cout<<"Mismatch. Incorrect sorting"<< std::endl;
   }

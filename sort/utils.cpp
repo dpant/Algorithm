@@ -11,7 +11,9 @@ using namespace std;
 bool comparef(int l, int r){	
   return l < r;
 }
-
+bool comparefeq(int l, int r){	
+  return l <= r;
+}
 void swap (int &i, int & j){
   int temp = i;
   i = j;
@@ -29,8 +31,8 @@ void GenerateTestFile2(string filename){
 }
 
 void GenerateTestFile(string filename){
-  enum { DATASIZE = 100000000};
-  enum { RANGE_START = 0, RANGE_END = 100000000 };
+  enum { DATASIZE = 10000000};
+  enum { RANGE_START = 0, RANGE_END = 10000000 };
   set<int> setcontainer;
   ofstream fobj(filename.c_str(), ios::out);
   if(!fobj.is_open())
@@ -45,6 +47,22 @@ void GenerateTestFile(string filename){
 	  fobj << randomnum <<endl;
 	  setcontainer.insert(randomnum);
 	}
+  }
+}
+void GenerateTestFileDuplicateKeys(string filename){
+  enum { DATASIZE = 10000000};
+  enum { RANGE_START = 0, RANGE_END = 10000000 };
+  set<int> setcontainer;
+  ofstream fobj(filename.c_str(), ios::out);
+  if(!fobj.is_open())
+	exit(1);
+  srand(time(0));
+  int num =10 ;
+  for(int i = 0 ; i < DATASIZE; i++){
+	  fobj << num <<endl;
+	  if(i % 100000 ==0){
+		num++;
+	  }
   }
 }
 vector<int> ReadTestFile(string filename){

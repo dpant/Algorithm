@@ -1,6 +1,7 @@
 #include "../utils.h"
 #include <vector>
 #include <iostream>
+#include <cstdlib>
 
 
 /* 
@@ -15,6 +16,8 @@ template <typename T>
 int partition(std::vector<T>& a,int start,int end,bool (*comp)(T,T)){
   int i = start;
   int j = end;
+  int randindex = start + (end -start) *(rand()/(RAND_MAX +1.0));
+  swap(a[randindex],a[start]); /* put pivot in it final position */	
   T pivot = a[start]; /* pivot element */
   while(i<j){ /* we can make it while(1) */
 	while(a[i] <= pivot && i < end) {
@@ -53,13 +56,17 @@ start and end index are both inclusive [start,end]
 */
 template<typename T>
 void quicksort(std::vector<T>& a,int start,int end,bool (*comp)(T,T)){
+  srand(time(0)); /* make qsort random - based on time seed */
+  quicksortR(a,start,end,comp);
+}
 
+template<typename T>
+void quicksortR(std::vector<T>& a,int start,int end,bool (*comp)(T,T)){
   int pindex = partition(a,start,end,comp);
-
   if(pindex - start > 0)/* Can we move this check if(start<= end) at begining of fucntion ? */
-	  quicksort(a,start,pindex-1,comp);
+	  quicksortR(a,start,pindex-1,comp);
   if(end - pindex > 0)
-	  quicksort(a,pindex+1,end,comp);
+	  quicksortR(a,pindex+1,end,comp);
 }
 
 /* median of 3 heuristic for quicksort */
@@ -88,33 +95,58 @@ template <typename T>
 int partition2(std::vector<T>& a,int start,int end,bool (*comp)(T,T)){
   int i = start;
   int j = end;
+  int randindex = start + (end -start) *(rand()/(RAND_MAX +1.0));
+  swap(a[randindex],a[start]); /* make qsort randomized */
   T pivot = a[start]; /* pivot element */
-  while(i<j){ /* we can make it while(1) */
+  /* std::cout << "random-Index" << randindex << std::endl;
+  for(i = 0 ; i < a.size(); i++){
+	std::cout << a[i] <<" ";
+	}
+  std::cout << std::endl;
+  */
+  i = start +1; /* this is important now since the first while is changed */
+  while(1){ /* we can make it while(1) */
+
 	while(a[i] < pivot && i < end) { /* notice < avoid n^2 loop in qsort for identical input */
 		i++;
 	}
-	while(a[j] > pivot && j > start){/* at end j will point to element which is smaller than or equal to pivot */
-		 j--;
+	while(a[j] > pivot && j >= start){/* at end j will point to element which is smaller than or equal to pivot */	
+	 j--;
 	}
 	if(j <= i){
 	  break; 
-	}else if(j ==i){ /* to avoid unnecessary swaps */
 	}else{ /* out of order relative to pivot element swap */
-	  swap(a[i],a[j]);
+	  swap(a[i++],a[j--]);
 	}
   }
   swap(a[start],a[j]); /* put pivot in it final position */
+  /* std::cout << "j" << j  << std::endl;
+  for(i = 0 ; i < a.size(); i++){
+	std::cout << a[i] <<" ";
+  }
+  std::cout << std::endl;
+  */
   return j;
 }
 
 /* avoids n^2 complexity in array with many input identical */
 
 template<typename T>
-void quicksortFixForDuplicateKeys(std::vector<T>& a,int start,int end,bool (*comp)(T,T)){
+void quicksortRadomFixForDupKeys(std::vector<T>& a,int start,int end,bool (*comp)(T,T)){
+   
   if(end <= start)
 	return;
   int pindex = partition2(a,start,end,comp);
 
-  quicksort(a,start,pindex-1,comp);
-  quicksort(a,pindex+1,end,comp);
+  quicksortRadomFixForDupKeys(a,start,pindex-1,comp);
+  quicksortRadomFixForDupKeys(a,pindex+1,end,comp);
+}
+
+
+
+/* avoids n^2 complexity in array with many input identical */
+template<typename T>
+void quicksortFixForDuplicateKeys(std::vector<T>& a,int start,int end,bool (*comp)(T,T)){
+  srand(time(0));    /* make qsort randomized - random seed based on time */
+  quicksortRadomFixForDupKeys(a,start,end,comp);
 }

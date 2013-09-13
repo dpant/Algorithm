@@ -18,18 +18,23 @@ Merge Sorting:100000000 took 37.95sec
 */
 int main(){
   void (*sortingAlgo[4])(vector<int> &a,int ,int,bool (*comp)(int,int));	
-  sortingAlgo = {mergesort,quicksort,quicksortHeuristic1,quicksortFixForDuplicateKeys};
+  /*sortingAlgo[0] = mergesort;
+  sortingAlgo[1] = quicksort;
+  sortingAlgo[2] = quicksortHeuristic1;*/
+  sortingAlgo[0] = quicksortFixForDuplicateKeys;
+ 
   vector<int> v;
   //GenerateTestFile("test.txt");	
+  // GenerateTestFileDuplicateKeys("testdup.txt");
 
-  for(int i =0 ; i < 3;i++){
-	v = ReadTestFile("test.txt");
+  for(int i =0 ; i < 1;i++){
+	v = ReadTestFile("testdup.txt");
 	clock_t startc = clock();	
 	(*sortingAlgo[i])(v,0,v.size()-1,&comparef);
 	clock_t endc = clock();
 	cout<< "Sorting:" << v.size() << " took " <<  ((double)(endc-startc))/CLOCKS_PER_SEC << "sec" <<endl;
 
-	if(!validateSort(v,comparef)){
+	if(!validateSort(v,comparefeq)){
 	  std::cout<<"Mismatch. Incorrect sorting"<< std::endl;
 	}
   }

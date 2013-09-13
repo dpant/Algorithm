@@ -7,7 +7,8 @@ void swap (int &i, int & j);
 void GenerateTestFile(std::string filename);
 std::vector<int> ReadTestFile(std::string filename);
 void GenerateTestFile2(std::string filename);
-
+void GenerateTestFileDuplicateKeys(std:: string filename);
+bool comparefeq(int l,int r);
 /*compute median(middle) of 3 element */
 template <typename T>
 int medianof3(T& a,int i,int j,int k){
@@ -29,7 +30,6 @@ int medianof3(T& a,int i,int j,int k){
 }
 template <typename T>
 bool validateSort(std::vector<T> &v,bool (*comparef)(int,int)){
-
   for(int i=0; i < v.size() -1;i++){
 	if(comparef(v[i],v[i+1])){
 	}else{
