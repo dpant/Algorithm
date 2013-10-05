@@ -31,7 +31,9 @@ class UnionFind{
   int *storage; /* stores the relation between the object id and the component id . How to get object id use symbol table*/
 int *treesize; /* stores the size(number of objects) of trees */
   int size; 
+
 public:
+  int clustersremaining;
   UnionFind(int N);
   int Root(int p);
   bool connected(int p,int q);

@@ -35,6 +35,7 @@ UnionFind::UnionFind(int N){ /* initialize  O(n) */
 	treesize[i] = 1; /* all tree are of 1 node at the begining */ 
 	storage[i]= i; /* put each object in different component class */
   }
+  clustersremaining = N;
 }
 int UnionFind::Root(int p){ /* returns the root object id - Worst case O(lgN) - do path compression */
   int root,elem,parent;
@@ -66,6 +67,10 @@ void UnionFind::DoUnion(int p,int q){ /* p and q represent object index */
   }else{
 	storage[proot] = storage[qroot];
 	treesize[proot] += treesize[qroot];
+  }
+  clustersremaining --;
+  if(clustersremaining ==0){
+	cout << "All merged" <<endl;
   }
 }
 UnionFind::~UnionFind(){
